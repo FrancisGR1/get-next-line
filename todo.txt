@@ -1,0 +1,20 @@
+Prototype:
+	char *get_next_line(int fd)
+
+Turn in:
+	get_next_line.c
+	get_next_line_utils.c
+	get_next_line.h
+
+Parameters:
+	fd: read from here
+
+Return:
+	line read
+	Null: if nothing to read or error
+Compilaçao:
+	cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 <files>.c
+	
+Bonus:
+	apenas uma var estatica
+	gerir multiplos fd ao mesmo tempo
