@@ -18,3 +18,8 @@ Compilaçao:
 Bonus:
 	apenas uma var estatica
 	gerir multiplos fd ao mesmo tempo
+	
+	
+	
+VER:
+https://www.youtube.com/watch?v=DtGrdB8wQ_8
