@@ -1,12 +1,19 @@
+NAME = get_next_line
+
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
-SOURCES = get_next_line.c
+SRC = get_next_line.c
+SOURCES = get_next_line.c get_next_line_utils.c
+OBJS = $(patsubst %.c, %.o, $(SOURCES))
 EXEC = && ./a.out
 
-get:
-	$(CC) $(CFLAGS) $(SOURCES) $(EXEC) 
+all: $(SOURCES)
 
+get: 
+	$(CC) $(CFLAGS) $(SRC) $(EXEC)
 
+fclean: 
+	rm -rf  $(OBJS)
 
 
 
