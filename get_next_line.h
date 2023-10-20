@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:12:23 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/19 15:20:28 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/20 09:51:03 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+int	ft_strclen(char *s, char c);
+int	ft_strlcpy(char *dest, char *src, int n);
 
 #endif
