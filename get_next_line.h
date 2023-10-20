@@ -6,16 +6,12 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:12:23 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/20 09:51:03 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/20 11:22:30 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
-# endif
 
 # include <unistd.h>
 # include <stdio.h>
@@ -24,6 +20,6 @@
 
 char	*get_next_line(int fd);
 int	ft_strclen(char *s, char c);
-int	ft_strlcpy(char *dest, char *src, int n);
+size_t	ft_strlcpy(char *dst, const char *src, int n);
 
 #endif

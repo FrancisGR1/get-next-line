@@ -6,16 +6,17 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/20 09:49:46 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:23:55 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <string.h>
 
 typedef struct s_buffer
 {
 	int	fd;
-	char	str[BUFFER_SIZE];
+	char	*str;
 	char	*temp;
 } t_buffer;
 /*
@@ -29,27 +30,62 @@ char	*reallocate_str(char *ptr_dest, char *ptr_src, size_t size)
 	return (ptr_dest);
 }
 */
+/*
+int     ft_strclen(char *s, char c)
+{
+        int     i;
 
-//transformar static em estrutura com:
-	//fd
-	//str total
-	//temp
-//dentro do str total, passar tudo ate \n
-	//O que e que preciso de fazer passo por passo?
-		//medir tudo ate \n - ft_strclen
-		//criar malloc com dado tamanho
-		//passar tudo para ai
-		//passar o resto para temp
-		//libertar total_buffer.str
-//se restar, passar para temp
+        i = 0;
+        while (*s && *s != c)
+        {
+                s++;
+                i++;
+        }
+        return (i);
+}
+*/
+
 char	*get_next_line(int fd)
 {
 	static t_buffer total_buffer;
-
+	char		*p;
+	char		buffer[BUFFER_SIZE];
 	total_buffer.fd = fd;
-	read(fd, total_buffer.str, BUFFER_SIZE);
-	char *p = (char *)malloc(ft_strclen(total_buffer.str, '\n') * sizeof(char));
-	//char *p = total_buffer.str;
+	read(fd, buffer, BUFFER_SIZE);
+	
+
+	//copiar ate \n para total_buffer.str
+	int i = 0;
+	int j = strlen(char)
+	while(buffer[i])
+		total_buffer.str[i] = buffer[i++];	
+		(char *)malloc(ft_strclen(total_buffer.str, '\n') * sizeof(char));
+	memcpy(p, total_buffer.str, ft_strclen(total_buffer.str, '\n'));
+	//problemas com o codigo acima:
+	//	Exemplo:
+	//		Ficheiro:
+	//			Exemplo abc_abc_abc\n
+	//			buffer size =4
+	//			1a copia = abc_    p = abc_0
+	//			2a copia = abc_    p= abc_abc_0
+	//			3a copia = abc\n   p= abc_abc_abc\n0	
+	//	//Passos
+	//		1. Alocar mem para p + str recebida
+	//		2. Copiar str para p
+	//		3. Se chegarmos a \n ou ao fim da linha
+	//			Retornar p
+	//		4. Caso contrario
+	//			Voltar para 1.
+	//
+	//		-----
+	//		Vou fazer o codigo depois considero o que esta abaixo
+	//		Isto nao esta a ter as seguintes consideracoes:
+	//		- se copiar depois de \n
+	//		- por ex. ab\nc
+	//		- 
+	//
+	//
+	//	Tenho de copiar o ficheiro ate chegar a \n
 	return (p);
 }
 
