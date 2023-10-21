@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   locate_newline.c                                   :+:      :+:    :+:   */
+/*   check_newline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:15:52 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 18:12:14 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/21 23:05:25 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	locate_newline(const char *s, int size)
+int	check_newline(const char *s, int size)
 {
 	int	i;
 

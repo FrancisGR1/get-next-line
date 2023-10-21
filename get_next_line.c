@@ -6,36 +6,41 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 19:24:02 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/21 23:18:29 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <string.h>
-/*
+
 typedef struct s_buffer
 {
 	int	fd;
 	char	*str;
-	char	*temp;
+	char	*tmp;
 } t_buffer;
-*/
+
 int result = 0;
 int i = 0;
 char	*get_next_line(int fd)
 {
 	char		*p;
 	char		buffer[BUFFER_SIZE];
+	static t_buffer				total_buffer;
 
-	p = malloc(BUFFER_SIZE + 1);
-	if (!p)
-		return (0);
+	//p = NULL;
+	//p = concatenate(p, total_buffer.tmp);
+	p = malloc(BUFFER_SIZE);
 	while ((read(fd, buffer, BUFFER_SIZE) > 0))
 	{
 		p = concatenate(p, buffer);
 		//printf("%s\n", buffer);
-		if (locate_newline(buffer, BUFFER_SIZE))
-			break ; 
+		if (check_newline(buffer, BUFFER_SIZE))
+		{
+			 total_buffer.tmp 
+			= concatenate(total_buffer.tmp, &buffer[ft_strclen(buffer, '\n')]);
+				break ; 
+		}
 	}
 	return (p);
 }
