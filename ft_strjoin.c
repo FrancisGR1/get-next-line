@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:12:23 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 18:54:39 by frmiguel         ###   ########.fr       */
+/*   Created: 2023/10/09 12:10:13 by frmiguel          #+#    #+#             */
+/*   Updated: 2023/10/09 12:29:24 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <fcntl.h>
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char		*p;
+	size_t		i;
+	size_t		j;
 
-char	*get_next_line(int fd);
-int	ft_strlen(const char *s);
-int	ft_strclen(const char *s, char c);
-char	*concatenate(const char *s1, const char *s2);
-int	locate_newline(const char *s, int size);
-
-#endif
+	if (!s1 || !s2)
+		return (0);
+	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!p)
+		return (0);
+	i = 0;
+	while (s1[i])
+	{
+		p[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		p[i + j] = s2[j];
+		j++;
+	}
+	p[i + j] = '\0';
+	return (p);
+}

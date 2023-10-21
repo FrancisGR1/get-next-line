@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strclen.c                                       :+:      :+:    :+:   */
+/*   locate_newline.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frmiguel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 12:08:58 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 18:59:20 by frmiguel         ###   ########.fr       */
+/*   Created: 2023/10/21 15:15:52 by frmiguel          #+#    #+#             */
+/*   Updated: 2023/10/21 18:12:14 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strclen(const char *s, char c)
+int	locate_newline(const char *s, int size)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] && s[i++] != c)
-		;
-	return (i);
+	while (s[i] && i <= size)
+	{
+		if (s[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 /*
-   int	main(int c, char **v)
-   {
-		char *str = "hello\nfr"; 
-		int result = ft_strclen(str, '\n');
-		printf("%d\n", result);
-   }
+int main (void)
+{
+	char *str = "h\n";
+	int result = locate_newline(str, 1);
+	printf("%d\n", result);
+	return 0;
+}
 */
