@@ -6,20 +6,20 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:15:52 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/22 15:05:20 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/22 18:41:21 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	check_newline(const char *s, int size)
+int	check_newline(const char *s)
 {
 	int	i;
 
 	if (!s)
 		return (0);
 	i = 0;
-	while (s[i] && i <= size)
+	while (s[i])
 	{
 		if (s[i] == '\n')
 			return (1);
@@ -30,8 +30,8 @@ int	check_newline(const char *s, int size)
 /*
 int main (void)
 {
-	char *str = "h\n";
-	int result = locate_newline(str, 1);
+	char *str = "\nab\nbc\ncd\nde\n";
+	int result = check_newline(str, 1);
 	printf("%d\n", result);
 	return 0;
 }
