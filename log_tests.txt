@@ -1,6 +1,26 @@
+^^^0 iteraçoes^^^
 BUFFER_SIZE
 = 1 (\n) // y
 = 1 // y
 = 2 // y
 = 3 // y
 = 4 // y
+= 10000 // y
+----------------
+
+
+^^^multiplas iteraçoes^^^
+Problema: se o tamanho exceder \n, come a proxima frase.
+ASsim, a proxima str nao começa no inicio original
+Possivel soluçao:
+	- Fazer um buffer static temp;
+	- Se exceder a \n
+		- Medir o tamanho do resto;
+		- Malloc do resto
+		- Passar o resto para o buffer static temp;
+		--
+		- Se !p for nulo (isto e, estamos a começar a preenche-lo)
+			- Concatenar com o temp;
+BUFFER_SIZE
+= 
+

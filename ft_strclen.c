@@ -6,7 +6,7 @@
 /*   By: frmiguel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 12:08:58 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 18:59:20 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:07:05 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_strclen(const char *s, char c)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] && s[i++] != c)
 		;

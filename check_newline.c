@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:15:52 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 23:05:25 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/22 15:05:20 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_newline(const char *s, int size)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i] && i <= size)
 	{

@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/21 23:18:29 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/22 16:06:04 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct s_buffer
 {
 	int	fd;
-	char	*str;
+	char	str[BUFFER_SIZE];
 	char	*tmp;
 } t_buffer;
 
@@ -25,21 +25,21 @@ int i = 0;
 char	*get_next_line(int fd)
 {
 	char		*p;
-	char		buffer[BUFFER_SIZE];
-	static t_buffer				total_buffer;
-
-	//p = NULL;
-	//p = concatenate(p, total_buffer.tmp);
-	p = malloc(BUFFER_SIZE);
-	while ((read(fd, buffer, BUFFER_SIZE) > 0))
+	static t_buffer			 	total_buffer;
+	
+	p = NULL;
+	p = concatenate(p, total_buffer.tmp);
+	if (total_buffer.tmp)
+		clean(&total_buffer.tmp);
+	while ((read(fd, total_buffer.str, BUFFER_SIZE) > 0))
 	{
-		p = concatenate(p, buffer);
-		//printf("%s\n", buffer);
-		if (check_newline(buffer, BUFFER_SIZE))
+		p = concatenate(p, total_buffer.str);
+		if (check_newline(total_buffer.str, BUFFER_SIZE))
 		{
-			 total_buffer.tmp 
-			= concatenate(total_buffer.tmp, &buffer[ft_strclen(buffer, '\n')]);
-				break ; 
+			clean(&total_buffer.tmp);
+			//printf("tmp: %s\n", total_buffer.tmp);
+			//printf("buf: %s\n", total_buffer.str);
+			break ; 
 		}
 	}
 	return (p);
@@ -52,11 +52,10 @@ int main(void)
 	printf("fd = %d\n", fd);
 	char *p;
 	// char *p2;
-	p = NULL;
-	while (i < 2)
+	while (i < 5)
 	{
 		p = get_next_line(fd);
-		printf("%d:%s", i, p);
+		printf("%d:%s",i,p);
 		i++;
 	}
 	//p2 = get_next_line(fd2);
