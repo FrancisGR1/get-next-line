@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:12:23 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/23 21:46:04 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/24 18:56:08 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct s_list
 } t_list;
 
 char	*get_next_line(int fd);
-int	ft_strlen(const char *s);
 int	ft_strclen(const char *s, char c);
 char	*concatenate(char *s1, const char *s2, char s2_c);
 void	clean(char **src);
 int	check_newline(const char *s);
+char	*ft_strddup(char **src);
 t_list	*find_fd(t_list *head, int fd);
 
 #endif

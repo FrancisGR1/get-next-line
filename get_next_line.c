@@ -6,14 +6,11 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/23 21:54:15 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:22:10 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-//fazer lista
-//norminettar
 
 t_list	*find_fd(t_list *head, int fd)
 {
@@ -38,11 +35,20 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
+char	*extract_line(char **src)
+{
+	char	*p;
+
+	p = NULL;
+	p = concatenate(p, *src, '\n');
+	clean(&(*src));
+	return (p);
+}
+
 char	*get_next_line(int fd)
 {
 	t_list			*file;
 	static t_list	*head;
-	char			*p;
 	ssize_t			bytes_read;
 
 	if (!head)
@@ -51,22 +57,13 @@ char	*get_next_line(int fd)
 	ft_lstadd_front(&head, file);
 	if (!file->str)
 		file->str = NULL;
-	p = NULL;
 	while (1)
 	{
 		if (file->str && check_newline(file->str))
-		{
-			p = concatenate(p, file->str, '\n');
-			clean(&file->str);
-			return (p);
-		}
+			return (extract_line(&file->str));
 		bytes_read = read(fd, file->tmp, BUFFER_SIZE);
 		if (file->str && bytes_read <= 0)
-		{
-			p = file->str;
-			file->str = NULL;
-			return (p);
-		}
+			return (ft_strddup(&file->str));
 		if (!file->str && bytes_read <= 0)
 			return (NULL);
 		file->tmp[bytes_read] = '\0';
@@ -78,15 +75,24 @@ int main(void)
 {
 	int fd = open("test.txt", O_RDONLY);
 	int fd2 = open("test2.txt", O_RDONLY);
+	int fd3 = open("test3.txt", O_RDONLY);
 	int i = 0;
 	char *p;
 	char *p2;
+	char *p3;
 	while (i < 18)
 	{
+		printf("\n\tLINE %d\n", i);
+		printf("\t----\n");
+
 		p = get_next_line(fd);
-		printf("\t%s\n",p);
+		printf("\tfd1: %s\n",p);
+
 		p2 = get_next_line(fd2);
-		printf("\t%d:%s\n",i,p2);
+		printf("\tfd2: %s\n",p2);
+
+		p3 = get_next_line(fd3);
+		printf("\tfd3: %s\n",p3);
 		i++;
 	}
 	//p2 = get_next_line(fd2);
