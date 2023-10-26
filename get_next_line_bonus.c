@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/24 23:02:03 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:21:38 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,18 @@ char	*extract_line(char **src)
 	return (p);
 }
 
+void	copy(char **dest, char *src)
+{
+	int	i;
+
+	*dest = malloc(ft_strclen(&(*src), '\0'));
+	if (!*dest)
+		return ;
+	i = -1;
+	while (src[++i])
+		(*dest)[i] = src[i];
+}
+
 char	*get_next_line(int fd)
 {
 	t_list			*file;
@@ -57,6 +69,8 @@ char	*get_next_line(int fd)
 	ft_lstadd_front(&head, file);
 	if (!file->str)
 		file->str = NULL;
+	if (fd <= 0)
+		return (NULL);
 	while (1)
 	{
 		if (file->str && check_newline(file->str))

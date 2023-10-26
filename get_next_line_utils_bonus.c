@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 22:19:10 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/24 23:19:58 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:19:04 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ char	*ft_strddup(char **src)
 	if (!src ||!*src)
 		return (0);
 	len = ft_strclen(*src, '\0');
-	p = malloc(len + 1);
+	if (len == 1)
+		return (0);
+	p = malloc(len);
 	if (!p)
 		return (0);
 	i = -1;
@@ -107,5 +109,7 @@ char	*ft_strddup(char **src)
 	p[len] = '\0';
 	free(*src);
 	*src = 0;
+	if (*p == '\0')
+		return (0);
 	return (p);
 }

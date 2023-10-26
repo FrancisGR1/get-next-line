@@ -6,11 +6,16 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 22:19:10 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/24 23:20:11 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:33:24 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+//#include "get_next_line.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
 
 int	ft_strclen(const char *s, char c)
 {
@@ -63,6 +68,7 @@ char	*concatenate(char *s1, const char *s2, char s2_c)
 	while (s2[++j] && s2[j] != s2_c)
 		p[i + j] = s2[j];
 	p[i + j] = '\0';
+	free(s1);
 	return (p);
 }
 
@@ -76,7 +82,7 @@ void	clean(char **src)
 		return ;
 	i = 0;
 	j = ft_strclen(*src, '\n');
-	p = (char *)malloc(ft_strclen(*src, '\0') - j);
+	p = (char *)malloc(ft_strclen(*src, '\0')  + 1 - j);
 	if (!p)
 		return ;
 	while ((*src)[i + j])
@@ -85,6 +91,11 @@ void	clean(char **src)
 		i++;
 	}
 	p[i] = '\0';
+	if (!*p)
+	{
+		free(p);
+		p = NULL;
+	}
 	free(*src);
 	*src = p;
 }
@@ -105,7 +116,20 @@ char	*ft_strddup(char **src)
 	while ((*src)[++i])
 		p[i] = (*src)[i];
 	p[len] = '\0';
+	if (!*p)
+		return (NULL);
 	free(*src);
 	*src = 0;
 	return (p);
 }
+/*
+int main (void)
+{
+	char	*p = strdup("b\n");
+	char	*str = strdup("a\n");
+	char	*result = concatenate(str, p, '\n');
+	printf("%s\n", result);
+	free(result);
+	free(p);
+}
+*/

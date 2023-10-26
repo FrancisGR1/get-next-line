@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/24 23:02:03 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/26 18:37:52 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ t_list	*find_fd(t_list *head, int fd)
 {
 	t_list	*p;
 
+	if (!head)
+		head = NULL;
+	p = NULL;
 	p = head;
 	while (p != NULL)
 	{
@@ -24,8 +27,14 @@ t_list	*find_fd(t_list *head, int fd)
 		p = p -> next;
 	}
 	p = malloc(sizeof(t_list));
-	p -> fd = fd;
+	if (!p)
+	{
+		free(p);
+		return (NULL);
+	}
 	p -> next = NULL;
+	p -> str = NULL;
+	p -> fd = fd;
 	return (p);
 }
 
@@ -45,6 +54,20 @@ char	*extract_line(char **src)
 	return (p);
 }
 
+void	copy(char **dest, char *src)
+{
+	int		i;
+
+	*dest = malloc(ft_strclen(*dest, '\0') + ft_strclen(&(*src), '\0') + 1);
+	if (!*dest)
+		return ;
+	i = -1;
+	while (src[++i])
+		(*dest)[i] = src[i];
+	printf("copied %d\n", i);
+	(*dest)[i] = '\0';
+}
+
 char	*get_next_line(int fd)
 {
 	t_list			*file;
@@ -55,32 +78,40 @@ char	*get_next_line(int fd)
 		head = NULL;
 	file = find_fd(head, fd);
 	ft_lstadd_front(&head, file);
-	if (!file->str)
-		file->str = NULL;
+	if (fd <= 0)
+		return (NULL);
 	while (1)
 	{
 		if (file->str && check_newline(file->str))
+		{
+			//printf("file->str: %s\n", file->str);
+			//printf("extract_line\n");
 			return (extract_line(&file->str));
+		}
 		bytes_read = read(fd, file->tmp, BUFFER_SIZE);
 		if (file->str && bytes_read <= 0)
+		{
+			//printf("ft_sstrddup\n");
 			return (ft_strddup(&file->str));
+		}
 		if (!file->str && bytes_read <= 0)
 			return (NULL);
 		file->tmp[bytes_read] = '\0';
-		file->str = concatenate(file->str, file->tmp, '\0');
+		file-> str = concatenate(file->str, file->tmp, '\0');
+		//printf("conc\n");
+		printf("%s\n", file->str);
 	}
 }
-/*
 int main(void)
 {
 	int fd = open("test.txt", O_RDONLY);
 	int fd2 = open("test2.txt", O_RDONLY);
 	int fd3 = open("test3.txt", O_RDONLY);
-	int i = 0;
-	char *p;
-	char *p2;
-	char *p3;
-	while (i < 18)
+	int i = 1;
+	char *p = NULL;
+	char *p2 = NULL;
+	char *p3 = NULL;
+	while (i < 3)
 	{
 		printf("\n\tLINE %d\n", i);
 		printf("\t----\n");
@@ -95,14 +126,26 @@ int main(void)
 		printf("\tfd3: %s\n",p3);
 		i++;
 	}
-	//p2 = get_next_line(fd2);
-	//printf("%s", p2);
-	//p = get_next_line(fd);
-	//printf("%s", p);
 
 	//test empty
 	//int empty = open("empty.txt", O_RDONLY);
 	//char *p3 = get_next_line(empty);
 	//printf("%s", p3);
+
+	//extract_line
+	//char *source ="a\nb\nc\n";
+	//char *src = strdup(source); 
+	//char *line1 = extract_line(&src);
+	//printf("Line 1: %s\n", line1);
+	//printf("src : %s\n", src);
+	close(fd);
+	close(fd2);
+	close(fd3);
+	if (p)
+		free(p);
+	if (p2)
+		free(p2);
+	if (p3)
+		free(p3);
+
 }
-*/

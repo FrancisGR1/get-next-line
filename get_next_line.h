@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:12:23 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/24 22:59:44 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/26 10:54:48 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <string.h>
 
 typedef struct s_list
 {
