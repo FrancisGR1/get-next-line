@@ -3,7 +3,7 @@ NAME = get_next_line
 
 BUFFER_SIZE ?= 42 
 CC = cc
-CFLAGS = -Werror -Wextra -Wall -D BUFFER_SIZE=$(BUFFER_SIZE)
+CFLAGS = -g -Werror -Wextra -Wall -D BUFFER_SIZE=$(BUFFER_SIZE)
 SRC = get_next_line.c
 SOURCES = get_next_line.c get_next_line_utils.c
 #SOURCES = get_next_line_bonus.c get_next_line_utils_bonus.c

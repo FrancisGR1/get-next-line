@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/26 18:37:52 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/10/27 20:15:20 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,10 @@ char	*extract_line(char **src)
 	char	*p;
 
 	p = NULL;
+	//printf("%s\n", *src);
 	p = concatenate(p, *src, '\n');
 	clean(&(*src));
 	return (p);
-}
-
-void	copy(char **dest, char *src)
-{
-	int		i;
-
-	*dest = malloc(ft_strclen(*dest, '\0') + ft_strclen(&(*src), '\0') + 1);
-	if (!*dest)
-		return ;
-	i = -1;
-	while (src[++i])
-		(*dest)[i] = src[i];
-	printf("copied %d\n", i);
-	(*dest)[i] = '\0';
 }
 
 char	*get_next_line(int fd)
@@ -84,7 +71,7 @@ char	*get_next_line(int fd)
 	{
 		if (file->str && check_newline(file->str))
 		{
-			//printf("file->str: %s\n", file->str);
+			//printf("file->str: %s", file->str);
 			//printf("extract_line\n");
 			return (extract_line(&file->str));
 		}
@@ -99,7 +86,7 @@ char	*get_next_line(int fd)
 		file->tmp[bytes_read] = '\0';
 		file-> str = concatenate(file->str, file->tmp, '\0');
 		//printf("conc\n");
-		printf("%s\n", file->str);
+		//printf("%s\n", file->str);
 	}
 }
 int main(void)
@@ -111,19 +98,19 @@ int main(void)
 	char *p = NULL;
 	char *p2 = NULL;
 	char *p3 = NULL;
-	while (i < 3)
+	while (i < 5)
 	{
-		printf("\n\tLINE %d\n", i);
-		printf("\t----\n");
+		//printf("\n\tLINE %d\n", i);
+		//printf("\t----\n");
 
 		p = get_next_line(fd);
-		printf("\tfd1: %s\n",p);
+		printf("fd: \t%s",p);
 
 		p2 = get_next_line(fd2);
-		printf("\tfd2: %s\n",p2);
+		printf("fd: \t%s",p2);
 
 		p3 = get_next_line(fd3);
-		printf("\tfd3: %s\n",p3);
+		printf("fd: \t%s",p3);
 		i++;
 	}
 
