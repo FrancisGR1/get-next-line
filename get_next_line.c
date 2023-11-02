@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:16:25 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/11/02 18:50:33 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/11/02 19:23:30 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,31 +144,30 @@ char	*clean_line(char *str)
 
 char	*get_txt(char *txt, int fd)
 {
-	ssize_t	bytes_read;
-	char	*tmp;
+    ssize_t	bytes_read;
+    char	*tmp;
 
-	if (check_newline(txt))
-		return (txt);
-	tmp = malloc(BUFFER_SIZE + 1);
-	if (!tmp)
-		return (0);
-	while (!check_newline(txt))
-	{
-		bytes_read = read(fd, tmp, BUFFER_SIZE); 
-		if (bytes_read < 1)
-		{
-			free(tmp);
-			if (!txt)
-			{
-				free(txt);
-				return (0);
-			}
-			break ;
-		}
-		tmp[bytes_read] = '\0';
-		txt = concatenate(txt, tmp);
-	}
-	return (txt);
+    tmp = malloc(BUFFER_SIZE + 1);
+    if (!tmp)
+        return (0);
+    while (!check_newline(txt))
+    {
+        bytes_read = read(fd, tmp, BUFFER_SIZE); 
+        if (bytes_read < 1)
+        {
+            free(tmp); 
+            if (bytes_read == 0 && txt && *txt == '\0')
+            {
+                free(txt);
+                return (0);
+            }
+            return (txt);
+        }
+        tmp[bytes_read] = '\0';
+        txt = concatenate(txt, tmp);
+    }
+    free(tmp);     
+    return (txt);
 }
 
 char	*concatenate(char *s1, char *s2)
@@ -177,13 +176,13 @@ char	*concatenate(char *s1, char *s2)
 	int		j;
 	char	*p;
 
-	//printf("s1: %s\n s2: %s\n", s1, s2);
-	if (!s1 && !s2)
+	if (!s1)
+	{
+		s1 = malloc(1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
 		return (0);
-	if (s1 && !s2)
-		return (s1);  
-	if (!s1 && s2)
-		return (s2);
 	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!p)
 		return (0);
@@ -195,7 +194,6 @@ char	*concatenate(char *s1, char *s2)
 		p[i + j] = s2[j];
 	p[i + j] = '\0';
 	free(s1);
-	free(s2);
 	return (p);	
 }
 
