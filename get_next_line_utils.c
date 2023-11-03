@@ -5,151 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 22:19:10 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/27 20:15:01 by frmiguel         ###   ########.fr       */
+/*   Created: 2023/11/02 21:06:31 by frmiguel          #+#    #+#             */
+/*   Updated: 2023/11/02 21:07:08 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-/*
-#include <stdlib.h>
-#include <stdio.h>
-#include <stddef.h>
-#include <string.h>
-*/
-int	ft_strclen(const char *s, char c)
+
+int	check_newline(const char *str)
 {
-	int	i;
-
-	if (!s)
+	if (!str)
 		return (0);
-	i = 0;
-	while (s[i] && s[i++] != c)
-		;
-	return (i);
-}
-
-int	check_newline(const char *s)
-{
-	int	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-			return (1);
-		i++;
-	}
+	while (*str && *str != '\n')
+		++str;
+	if (*str == '\n')
+		return (1);
 	return (0);
 }
 
-char	*wtf(int i)
+size_t	ft_strlen(const char *str)
 {
-	char	*p;
+	const char	*start;
 
-	p = malloc(i);
-	if (!p)
+	if (!str)
 		return (0);
-	p[0] = '\0';
-	return (p);
+	start = str;
+	while (*str)
+		++str;
+	return (str - start);
 }
-
-char	*concatenate(char *s1, const char *s2, char s2_c)
-{
-	char	*p;
-	int		i;
-	int		j;
-
-	if (!s2)
-		return (0);
-	if (!s1)
-		s1 = wtf(1);
-	p = malloc(ft_strclen(s1, '\0') + ft_strclen(s2, s2_c) + 1);
-	if (!p)
-		return (0);
-	i = -1;
-	while (s1[++i])
-		p[i] = s1[i];
-	j = -1;
-	while (s2[++j])
-	{
-		p[i + j] = s2[j];
-		if (p[i + j] == s2_c)
-			break ;
-	}
-	p[i + (++j)] = '\0';
-	free(s1);
-	return (p);
-}
-
-void	clean(char **src)
-{
-	int		i;
-	int		j;
-	char	*p;
-
-	if (!src || !*src)
-		return ;
-	i = 0;
-	j = ft_strclen(*src, '\n');
-	p = (char *)malloc(ft_strclen(*src, '\0') + 1 - j);
-	if (!p)
-		return ;
-	while ((*src)[i + j])
-	{
-		p[i] = (*src)[i + j];
-		i++;
-	}
-	p[i] = '\0';
-	if (!*p)
-	{
-		free(p);
-		p = NULL;
-	}
-	free(*src);
-	*src = p;
-}
-
-char	*ft_strddup(char **src)
-{
-	int		len;
-	int		i;
-	char	*p;
-
-	if (!src ||!*src)
-		return (0);
-	len = ft_strclen(*src, '\0');
-	p = malloc(len + 1);
-	if (!p)
-		return (0);
-	i = -1;
-	while ((*src)[++i])
-		p[i] = (*src)[i];
-	p[len] = '\0';
-	if (!*p)
-		return (NULL);
-	free(*src);
-	*src = 0;
-	return (p);
-}
-/*
-int main (void)
-{
-	//concatenate
-	//char	*p = strdup("b\n");
-	//char	*str = strdup("a\n");
-	//char	*result = concatenate(str, p, '\n');
-	//printf("%s\n", result);
-	//free(result);
-	//free(p);
-	
-	//ft_strclen
-	char *str1 = "a";
-	char *str2 = "a\na\na\n";
-	int result1 = ft_strclen(str1, '\0');
-	int result2 = ft_strclen(str2, '\n');
-	printf("%d + %d", result1, result2);
-}
-*/

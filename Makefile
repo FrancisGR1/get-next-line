@@ -1,52 +1,3 @@
-<<<<<<< HEAD
-NAME = get_next_line
-
-
-BUFFER_SIZE ?= 42 
-CC = cc
-CFLAGS = -g -Werror -Wextra -Wall -D BUFFER_SIZE=$(BUFFER_SIZE)
-SRC = get_next_line.c
-SOURCES = get_next_line.c get_next_line_utils.c
-#SOURCES = get_next_line_bonus.c get_next_line_utils_bonus.c
-#OBJS = $(patsubst %.c, %.o, $(SOURCES))
-EXEC = && ./a.out
-
-all: $(SOURCES)
-bonus: $(BSOURCES) 
-get: $(SOURCES) 
-	$(CC) $(CFLAGS) $(SOURCES) $(EXEC)
-fclean: 
-	rm -rf  $(OBJS)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
 CC = cc
 NAME = get_next_line
 SRCS = get_next_line.c get_next_line_utils.c
@@ -59,6 +10,7 @@ get: $(SRCS)
 all: 
 
 clean:
-
+	rm main
 fclean:
->>>>>>> gnl3/main
+
+bonus:

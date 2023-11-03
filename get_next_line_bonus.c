@@ -5,118 +5,177 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 18:14:29 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/10/26 10:21:38 by frmiguel         ###   ########.fr       */
+/*   Created: 2023/11/02 17:16:25 by frmiguel          #+#    #+#             */
+/*   Updated: 2023/11/03 14:23:16 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-t_list	*find_fd(t_list *head, int fd)
+/*
+int main (void)
 {
-	t_list	*p;
+	//int fd = open("test.txt", O_RDONLY);
+	//int fd2 = open("test2.txt", O_RDONLY);
+	int fd3 = open("shakespeare.txt", O_RDONLY);
+	//int fd4 = open("vars_nls.txt", O_RDONLY);
+	//int fd5 = open("read_error.txt", O_RDONLY);
+	//int fd6 = open("1char.txt", O_RDONLY);
+	//int fd7 = open("41_with_nl", O_RDONLY);
 
-	p = head;
-	while (p != NULL)
+	//multiple files
+	
+	//int i = 0;
+	//while (i < 4)
+	//{
+	//	char	*str = get_next_line(fd);
+	//	printf("%s", str);
+	//	char	*str2 = get_next_line(fd2);
+	//	printf("%s", str2);
+	//	char	*str3 = get_next_line(fd3);
+	//	printf("%s", str3);
+	//	i++;
+	//	free(str);
+	//	free(str2);
+	//	free(str3);	
+	//}
+
+	
+	char	*s;
+	while (1)
 	{
-		if (p -> fd == fd)
-			return (p);
-		p = p -> next;
+		s = get_next_line(fd3);
+	      //usleep(50000);
+		printf("%s", s);
+		if (!s)
+		{
+			free(s);
+			break ;
+		}
+		free(s);
 	}
-	p = malloc(sizeof(t_list));
-	p -> fd = fd;
-	p -> next = NULL;
-	return (p);
+	//close(fd);
+	//close(fd2);
+	close(fd3);
+	//close(fd4);
+	//close(fd5);
+	//close(fd6);
+	//close(fd7);
 }
-
-void	ft_lstadd_front(t_list **lst, t_list *new)
-{
-	new -> next = *lst;
-	*lst = new;
-}
-
-char	*extract_line(char **src)
-{
-	char	*p;
-
-	p = NULL;
-	p = concatenate(p, *src, '\n');
-	clean(&(*src));
-	return (p);
-}
-
-void	copy(char **dest, char *src)
-{
-	int	i;
-
-	*dest = malloc(ft_strclen(&(*src), '\0'));
-	if (!*dest)
-		return ;
-	i = -1;
-	while (src[++i])
-		(*dest)[i] = src[i];
-}
+*/
 
 char	*get_next_line(int fd)
 {
-	t_list			*file;
-	static t_list	*head;
-	ssize_t			bytes_read;
+	static char	*txt[MAX_FD];
+	char		*line;
 
-	if (!head)
-		head = NULL;
-	file = find_fd(head, fd);
-	ft_lstadd_front(&head, file);
-	if (!file->str)
-		file->str = NULL;
-	if (fd <= 0)
-		return (NULL);
-	while (1)
-	{
-		if (file->str && check_newline(file->str))
-			return (extract_line(&file->str));
-		bytes_read = read(fd, file->tmp, BUFFER_SIZE);
-		if (file->str && bytes_read <= 0)
-			return (ft_strddup(&file->str));
-		if (!file->str && bytes_read <= 0)
-			return (NULL);
-		file->tmp[bytes_read] = '\0';
-		file->str = concatenate(file->str, file->tmp, '\0');
-	}
+	if (fd < 0 || BUFFER_SIZE < 0)
+		return (0);
+	txt[fd] = get_txt(txt[fd], fd);
+	line = extract_line(txt[fd]);
+	txt[fd] = clean_line(txt[fd]);
+	return (line);
 }
-/*
-int main(void)
+
+char	*extract_line(char *str)
 {
-	int fd = open("test.txt", O_RDONLY);
-	int fd2 = open("test2.txt", O_RDONLY);
-	int fd3 = open("test3.txt", O_RDONLY);
-	int i = 0;
-	char *p;
-	char *p2;
-	char *p3;
-	while (i < 18)
-	{
-		printf("\n\tLINE %d\n", i);
-		printf("\t----\n");
+	int		i;
+	int		j;
+	char	*line;
 
-		p = get_next_line(fd);
-		printf("\tfd1: %s\n",p);
-
-		p2 = get_next_line(fd2);
-		printf("\tfd2: %s\n",p2);
-
-		p3 = get_next_line(fd3);
-		printf("\tfd3: %s\n",p3);
-		i++;
-	}
-	//p2 = get_next_line(fd2);
-	//printf("%s", p2);
-	//p = get_next_line(fd);
-	//printf("%s", p);
-
-	//test empty
-	//int empty = open("empty.txt", O_RDONLY);
-	//char *p3 = get_next_line(empty);
-	//printf("%s", p3);
+	if (!str)
+		return (0);
+	j = -1;
+	while (str[++j] && str[j] != '\n')
+		;
+	line = malloc(j + 2);
+	if (!line)
+		return (0);
+	i = -1;
+	while (++i < j + 1)
+		line[i] = str[i];
+	line[i] = '\0';
+	return (line);
 }
-*/
+
+char	*clean_line(char *str)
+{
+	int		i;
+	int		j;
+	char	*rest;
+
+	if (!str)
+		return (0);
+	i = -1;
+	while (str[++i] && str[i] != '\n')
+		;
+	if (!str[i])
+	{
+		free(str);
+		return (0);
+	}
+	rest = malloc(ft_strlen(str) - i + 1);
+	if (!rest)
+		return (0);
+	j = -1;
+	while (str[++i])
+		rest[++j] = str[i];
+	rest[++j] = '\0';
+	free(str);
+	return (rest);
+}
+
+char	*get_txt(char *txt, int fd)
+{
+	ssize_t	bytes_read;
+	char	*tmp;
+
+	tmp = malloc(BUFFER_SIZE + 1);
+	if (!tmp)
+		return (0);
+	while (!check_newline(txt))
+	{
+		bytes_read = read(fd, tmp, BUFFER_SIZE);
+		if (bytes_read < 1)
+		{
+			free(tmp);
+			if (bytes_read == 0 && txt && *txt == '\0')
+			{
+				free(txt);
+				return (0);
+			}
+			return (txt);
+		}
+		tmp[bytes_read] = '\0';
+		txt = concatenate(txt, tmp);
+	}
+	free(tmp);
+	return (txt);
+}
+
+char	*concatenate(char *s1, char *s2)
+{
+	int		i;
+	int		j;
+	char	*p;
+
+	if (!s1)
+	{
+		s1 = malloc(1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
+		return (0);
+	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!p)
+		return (0);
+	i = -1;
+	while (s1[++i])
+		p[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+		p[i + j] = s2[j];
+	p[i + j] = '\0';
+	free(s1);
+	return (p);
+}

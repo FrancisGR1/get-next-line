@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-c
-c
-c
-=======
 fsgd
 fsgewg
 sgsdgg
 dsdg
 
->>>>>>> gnl3/main
