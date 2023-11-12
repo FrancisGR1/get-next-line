@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:06:31 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/11/02 21:07:08 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:39:28 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,16 @@ size_t	ft_strlen(const char *str)
 	while (*str)
 		++str;
 	return (str - start);
+}
+
+void	clearbuff(char *buff)
+{
+	int	i;
+
+	i = 0;
+	while (buff[i] != '\0' && i < BUFFER_SIZE)
+	{
+		buff[i] = '\0';
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 15:20:42 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/11/03 14:25:29 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:34:27 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char	*get_txt(char *txt, int fd);
 char	*concatenate(char *s1, char *s2);
 int		check_newline(const char *str);
 size_t	ft_strlen(const char *str);
+void	clearbuff(char *str);
 
 #endif

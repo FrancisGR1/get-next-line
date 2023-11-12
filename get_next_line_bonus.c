@@ -6,7 +6,7 @@
 /*   By: frmiguel <frmiguel@student.42Lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 17:16:25 by frmiguel          #+#    #+#             */
-/*   Updated: 2023/11/03 14:23:16 by frmiguel         ###   ########.fr       */
+/*   Updated: 2023/11/12 20:36:45 by frmiguel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,12 @@ char	*get_next_line(int fd)
 	static char	*txt[MAX_FD];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE < 0 || read(fd, 0, 0) < 0)
+	{
+		if (fd > 0 && txt[fd])
+			clearbuff(txt[fd]);
 		return (0);
+	}
 	txt[fd] = get_txt(txt[fd], fd);
 	line = extract_line(txt[fd]);
 	txt[fd] = clean_line(txt[fd]);
